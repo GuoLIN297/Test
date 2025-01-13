@@ -22,21 +22,21 @@ python3 setup.py develop
 ```
 
 # Basic Usage
-Once DeepOPF is installed, adversarial attacks and defenses on optimal power flow be generated as follows.
-First, you'll need to create an object with the power system of interest
+Once DeepOPF is installed, adversarial attacks and defenses on optimal power flow be simulated as follows.
+First, you'll need to create an object with the power system and parameters of interest
 
 ```
-Nbus = '14' # Number of buses
+Nbus = '14'   # Number of buses
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print(device)
 print("Let's use", torch.cuda.device_count(), "GPUs!")
 data_path = './data/'
-data = scipy.io.loadmat(data_path + 'case' + str(Nbus) + '.mat') # Dataset
-epoch_training = 100
-epoch_attack = 10
-cost = torch.tensor([10, 20]) # The cost of unit generation for each generator
-attack_method = 0
-defense_method = 0
+data = scipy.io.loadmat(data_path + 'case' + str(Nbus) + '.mat')   # Dataset
+epoch_training = 100   # Training epoch
+epoch_attack = 10   # Attack epoch
+cost = torch.tensor([10, 20])   # The cost of unit generation for each generator
+attack_method = 0   # 0 means attack to increase the deviation, 1 means attack to increase the generation 
+defense_method = 0   #0 means adversarial defense; 1 means stochastic network
 case = DeepOPF(data, epoch_training, epoch_attack, Nbus, attack_method, defense_method, cost, device)
 ```
 
